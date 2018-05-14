@@ -4,23 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>login php</title>
+    <title>login php codesApp</title>
     <style>
     /* Add styles to the form container */
 .container {
-    position: relative;
-    left: 500px;
-    margin: 5px;
-    max-width: 300px;
-    padding: 5px;
+    
+    margin: auto;
+    max-width: 400px;
+    padding: 15px;
     background-color: white;
 }
 
 /* Full-width input fields */
 input[type=text], input[type=password] {
+    font-size: 100%;
     width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
+    padding: 18px;
+    margin: 15px 0 32px 0;
     border: none;
     background: #f1f1f1;
 }
@@ -32,12 +32,13 @@ input[type=text]:focus, input[type=password]:focus {
 
 /* Set a style for the submit button */
 .btn {
+    font-size: 100%;
     background-color: #4CAF50;
     color: white;
-    padding: 16px 20px;
+    padding: 18px;
     border: none;
     cursor: pointer;
-    width: 100%;
+    width: 110%;
     opacity: 0.9;
 }
 
@@ -47,18 +48,14 @@ input[type=text]:focus, input[type=password]:focus {
     </style>
 </head>
 <body>
-<div>
         <form action="/action_login.php" method='post'>
             <div class="container">
                 <h3>logueate </h3>
-                <label for="email"><b>email</b></label>
-                <input type="text" placeholder="email" name="email"  value="<?php echo $email;?>" required></input>
-                <label for="name"><b>password</b></label>
-                <input type="password" placeholder="password" name="pass" value="<?php echo $pass;?>" required>
+                Email: <input type="text" placeholder="email" name="email"  value="<?php echo $email;?>" required></input>
+                Password: <input type="password" placeholder="password" name="pass" value="<?php echo $pass;?>" required>
                 <button type="submit" class="btn">Login</button>
             </div>
         </form>
-    </div>
 
 </body>
 </html>

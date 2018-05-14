@@ -1,3 +1,19 @@
+<?php
+// Start the session
+session_start();
+if(!isset($_SESSION['usuario'])){
+    header('Location:index.php');
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>php mysql</title>
+<style>
 .tabl {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -29,13 +45,13 @@
     padding: 5px;
     background-color: white;
 }
-body {font-family: Arial, Helvetica, sans-serif;}
 
 /* Full-width input fields */
 input[type=text], input[type=password] {
+    font-size: 100%;
     width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
+    padding: 10px 20px;
+    margin: 8px 0 15px ;
     display: inline-block;
     border: 1px solid #ccc;
     box-sizing: border-box;
@@ -43,6 +59,7 @@ input[type=text], input[type=password] {
 
 /* Set a style for all buttons */
 button {
+    font-size: 100%;
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
@@ -55,7 +72,7 @@ button {
 button:hover {
     opacity: 0.8;
 }
-body {margin:0;font-family:Arial}
+body {margin:0;font-family:Arial, Helvetica, sans-serif;}
 
 .topnav {
   overflow: hidden;
@@ -159,3 +176,36 @@ body {margin:0;font-family:Arial}
     text-align: left;
   }
 }
+
+</style>
+</head>
+<body>
+<div class="topnav" id="myTopnav">
+  <a href="usuarios.php" class="active">Home</a>
+  <a href="#news">News</a>
+  <a href="#contact">Contact</a>
+  <div class="dropdown">
+    <button class="dropbtn">Dropdown 
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="#">Link 1</a>
+      <a href="#">Link 2</a>
+      <a href="#">Link 3</a>
+    </div>
+  </div> 
+  <a href="singout.php">Singout</a>
+  <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+</div>
+
+
+<script>
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+</script>

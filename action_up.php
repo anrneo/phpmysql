@@ -1,54 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
-</head>
-<body>
-    
+<?php include 'layout.php' ?>
 
 <?php
 
-include 'conndb.php';
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "usuarios";
 
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
-$id = intval($_GET['id']);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// sql to delete a record
-$sql = "SELECT * FROM datospersonales WHERE id='".$id."'";
-$result = $conn->query($sql);
+    // Prepare statement
+    $stmt = $conn->prepare("SELECT * FROM datospersonales WHERE id='".$_GET['id']."'"); 
+    // execute the query
+    $stmt->execute();
 
-if ($result->num_rows > 0) {
- // output data of each row
- while($row = $result->fetch_assoc()) {
-
-echo '<div>
-    <form action="/action_update.php" method="get">
-        <div class="container">
-            <h3>Actualizar Datos</h3>
-            <label for="id"><b>id</b></label>
-            <input type="text" name="id"  value="'.$row["id"].'" readonly>
-            <label for="cc"><b>cc</b></label>
-            <input type="text" name="cc"  value="'.$row["cc"].'" >
-            <label for="name"><b>nombre</b></label>
-            <input type="text" name="nombre" value="'.$row["nombre"].'">
-            <label for="lastname"><b>apellido</b></label>
-            <input type="text" name="apellido" value="'.$row["apellido"].'" >
-            <label for="age"><b>edad</b></label>
-            <input type="text" name="edad" value="'.$row["edad"].'" >
-            <button type="submit" class="btn">Actualizar</button>
-        </div>
-    </form>
-</div>'; 
-                 }
-} else {
-    echo "Error deleting record: " . $conn->error;
-}
-
-$conn->close();
+    if ($stmt->rowCount()) {
+        // set the resulting array
+        $result = $stmt->fetchAll(); 
+             // output data of each row
+         foreach ($result as $key) {
+            echo '<div>
+            <form action="/action_update.php?id='.$_GET['id'].'" method="post">
+                <div class="container">
+                    <h3>Actualizar Datos</h3>
+                    <input type="text" name="id"  value="'.$key["id"].'" style="display:none">
+                    Cedula: <input type="text" name="cc"  value="'.$key["cc"].'" >
+                    Nombre: <input type="text" name="nombre" value="'.$key["nombre"].'">
+                    Apellido: <input type="text" name="apellido" value="'.$key["apellido"].'" >
+                    Edad: <input type="text" name="edad" value="'.$key["edad"].'" >
+                    <button type="submit" class="btn">Actualizar</button>
+                </div>
+            </form>
+        </div>'; 
+             }
+     } 
+    }
+    catch(PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+    $conn = null;
 
 ?>
 </body>

@@ -1,19 +1,41 @@
 <?php
 
-include 'conndb.php';
+// Start the session
+session_start();
 
-    $email=$_POST['email'];
-    $pass=$_POST['pass'];
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "usuarios";
 
- 
-     $sql = "SELECT * FROM login WHERE email='".$email."' and pass='".$pass."'";
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
-     $result = $conn->query($sql);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-     if ($result->num_rows > 0) {
-        header('Location: usuarios.php');   
-     }else {
-        echo "No es un usuario registrado";
-    }
-    $conn->close();
+    $email=htmlentities(addslashes($_POST['email']));
+    $pass=htmlentities(addslashes($_POST['pass']));
+
+    // Prepare statement
+    $stmt = $conn->prepare("SELECT * FROM LOGIN where email='".$email."' and pass='".$pass."'"); 
+    // execute the query
+    $stmt->execute();
+
+    if ($stmt->rowCount()) {
+
+        $_SESSION['usuario']=$_POST['email'];
+
+       header('Location:usuarios.php'); 
+
+    }else {
+        
+       echo "No es un usuario registrado";
+   }
+}
+catch(PDOException $e) {
+    echo "Error: " . $e->getMessage();
+}
+$conn = null;
+
 ?>

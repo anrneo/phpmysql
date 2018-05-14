@@ -1,41 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
-    <style>
-    
-    </style>
-</head>
-<body>
+
+    <?php include 'layout.php' ?>
     <div>
         <form action="/action_page.php" method='post'>
             <div class="container">
                 <h3>Datos</h3>
-                <label for="email"><b>cc</b></label>
-                <input type="text" placeholder="cc" name="cc"  value="<?php echo $cc;?>" required>
-                <label for="name"><b>nombre</b></label>
-                <input type="text" placeholder="nombre" name="nombre" value="<?php echo $name;?>" required>
-                <label for="lastname"><b>apellido</b></label>
-                <input type="text" placeholder="apellido" name="apellido" value="<?php echo $apellido;?>" required>
-                <label for="age"><b>edad</b></label>
-                <input type="text" placeholder="edad" name="edad" value="<?php echo $edad;?>" required>
-                <button type="submit" class="btn">Login</button>
+                CC: <input type="text" placeholder="cc" name="cc" autofocus required> 
+                Nombre: <input type="text" placeholder="nombre" name="nombre"  required>
+                Apellido: <input type="text" placeholder="apellido" name="apellido" required>
+                Edad: <input type="text" placeholder="edad" name="edad" required>
+                <button type="submit" class="btn">Insertar Datos</button>
             </div>
         </form>
     </div>
     <?php
 
-    include 'conndb.php';
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "usuarios";
 
-     $sql = "SELECT * FROM datospersonales";
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
-     $result = $conn->query($sql);
+    // set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-     if ($result->num_rows > 0) {
+    // Prepare statement
+    $stmt = $conn->prepare("SELECT * FROM datospersonales"); 
+    // execute the query
+    $stmt->execute();
+
+    if ($stmt->rowCount()) {
         echo "<table class='tabl'>";
         echo "<tr>
                 <th>CC</th>
@@ -45,23 +40,29 @@
                 <th>UPDATE</th>
                 <th>DELETE</th>
             </tr>"; 
+        // set the resulting array
+        $result = $stmt->fetchAll(); 
              // output data of each row
-         while($row = $result->fetch_assoc()) {
+         foreach ($result as $key) {
              echo "<tr>
-                        <td>".$row["cc"]."</td>
-                        <td>".$row["nombre"]."</td>
-                        <td>".$row["apellido"]."</td>
-                        <td>".$row["edad"]."</td>
-                        <td><a href='action_up.php?id=".$row["id"]."' method='get'>update</button></td>
-                        <td><a href='action_del.php?id=".$row["id"]."' method='get' >delete</a></td>
+                        <td>".$key["cc"]."</td>
+                        <td>".$key["nombre"]."</td>
+                        <td>".$key["apellido"]."</td>
+                        <td>".$key["edad"]."</td>
+                        <td><a href='action_up.php?id=".$key["id"]."' method='get'>update</button></td>
+                        <td><a href='action_del.php?id=".$key["id"]."' method='get' >delete</a></td>
                         </tr>";
          }
          echo "</table>";
      } else {
          echo "0 results";
      }
-     $conn->close();
-?>
+    }
+    catch(PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+    $conn = null;
+    ?>
 
     </body>
 </html>
