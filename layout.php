@@ -38,9 +38,7 @@ if(!isset($_SESSION['usuario'])){
 }
 /* Add styles to the form container */
 .container {
-    position: relative;
-    left: 500px;
-    margin: 5px;
+    margin: auto;
     max-width: 300px;
     padding: 5px;
     background-color: white;
@@ -49,12 +47,13 @@ if(!isset($_SESSION['usuario'])){
 /* Full-width input fields */
 input[type=text], input[type=password] {
     font-size: 100%;
-    width: 100%;
     padding: 10px 20px;
     margin: 8px 0 15px ;
     display: inline-block;
     border: 1px solid #ccc;
-    box-sizing: border-box;
+    box-sizing: border-box;  
+      width: 100%;
+
 }
 
 /* Set a style for all buttons */
@@ -177,6 +176,10 @@ body {margin:0;font-family:Arial, Helvetica, sans-serif;}
   }
 }
 
+
+
+}
+
 </style>
 </head>
 <body>
@@ -195,6 +198,7 @@ body {margin:0;font-family:Arial, Helvetica, sans-serif;}
     </div>
   </div> 
   <a href="singout.php">Singout</a>
+  <a href="#"><?php echo $_SESSION['usuario']?></a>
   <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
 </div>
 

@@ -14,8 +14,8 @@ try {
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $email=htmlentities(addslashes($_POST['email']));
-    $pass=htmlentities(addslashes($_POST['pass']));
+    $email=htmlspecialchars($_POST['email']);
+    $pass=htmlspecialchars($_POST['pass']);
 
     // Prepare statement
     $stmt = $conn->prepare("SELECT * FROM LOGIN where email='".$email."' and pass='".$pass."'"); 

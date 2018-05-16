@@ -6,10 +6,10 @@ if(!isset($_SESSION['usuario'])){
 }
 
 
-    $cc=htmlentities(addslashes($_POST['cc']));
-    $nombre=htmlentities(addslashes($_POST['nombre']));
-    $apellido=htmlentities(addslashes($_POST['apellido']));
-    $edad=htmlentities(addslashes($_POST['edad']));
+    $cc=htmlspecialchars($_POST['cc']);
+    $nombre=htmlspecialchars($_POST['nombre']);
+    $apellido=htmlspecialchars($_POST['apellido']);
+    $edad=htmlspecialchars($_POST['edad']);
 
     $servername = "localhost";
     $username = "root";

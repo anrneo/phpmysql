@@ -1,13 +1,13 @@
 
     <?php include 'layout.php' ?>
     <div>
-        <form action="/action_page.php" method='post'>
+        <form action="/action_page.php" method='post' id='forminsert'>
             <div class="container">
                 <h3>Datos</h3>
-                CC: <input type="text" placeholder="cc" name="cc" autofocus required> 
+                CC: (0-9)<input type="text" placeholder="cc" name="cc" id='cc' autofocus required> 
                 Nombre: <input type="text" placeholder="nombre" name="nombre"  required>
                 Apellido: <input type="text" placeholder="apellido" name="apellido" required>
-                Edad: <input type="text" placeholder="edad" name="edad" required>
+                Edad: (0-9)<input type="text" placeholder="edad" name="edad" id='edad' required>
                 <button type="submit" class="btn">Insertar Datos</button>
             </div>
         </form>
@@ -63,6 +63,23 @@ try {
     }
     $conn = null;
     ?>
-
+    <script>
+    miFormulario = document.querySelector('#forminsert');
+    miFormulario.cc.addEventListener('keypress', function (e){
+	if (!soloNumeros(event)){
+  	e.preventDefault();
+    }
+})
+miFormulario.edad.addEventListener('keypress', function (e){
+	if (!soloNumeros(event)){
+  	e.preventDefault();
+    }
+})
+//Solo permite introducir numeros.
+function soloNumeros(e){
+    var key = e.charCode;
+    return key >= 48 && key <= 57;
+}
+    </script>
     </body>
 </html>

@@ -27,7 +27,7 @@ try {
             <form action="/action_update.php?id='.$_GET['id'].'" method="post">
                 <div class="container">
                     <h3>Actualizar Datos</h3>
-                    <input type="text" name="id"  value="'.$key["id"].'" style="display:none">
+                    <input type="hidden" name="id"  value="'.$key["id"].'">
                     Cedula: <input type="text" name="cc"  value="'.$key["cc"].'" >
                     Nombre: <input type="text" name="nombre" value="'.$key["nombre"].'">
                     Apellido: <input type="text" name="apellido" value="'.$key["apellido"].'" >
